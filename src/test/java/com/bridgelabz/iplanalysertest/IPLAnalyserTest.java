@@ -21,6 +21,19 @@ public class IPLAnalyserTest
         oplMostWickets = new IPLAnalyser(IPLAnalyser.Player.BOWLER);
     }
 
+    @Test
+    public void givenIPLMostRunsCSVFile_ShouldReturnCorrectRecords()
+    {
+        try
+        {
+            int iplRecords = iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+            Assert.assertEquals(100, iplRecords);
+        } catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     //UC1
     @Test
     public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_WithTopBattingAverage()

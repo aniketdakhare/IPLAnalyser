@@ -32,10 +32,11 @@ public class IPLAnalyser
      * @param separator provides the separator for records in csv file
      * @throws IPLAnalyserException while handling the occurred exception
      */
-    public void loadIPLData(Player player, char separator, String... csvFilePath)
+    public int loadIPLData(Player player, char separator, String... csvFilePath)
             throws IPLAnalyserException
     {
         iplMap = IPLAdapterFactory.getIPLDataObject(player, separator, csvFilePath);
+        return iplMap.size();
     }
 
     public String getSortedDataAsPerBattingAverage()
