@@ -50,6 +50,18 @@ public class IPLAnalyserTest
         }
     }
 
+    @Test
+    public void givenIPLMostRunsData_WithCorrectFile_ButIncorrectDelimiter_ShouldThrowException()
+    {
+        try
+        {
+            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+        } catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     //UC1
     @Test
     public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_WithTopBattingAverage()
