@@ -15,12 +15,12 @@ public class IPLAnalyserTest
     private static final String IPL_RUN_CSV_WRONG_FILE_PATH = "./src/main/resources/Day16 Data_01 IPL2019FactsheetMostRuns.csv";
     private static final String IPL_WICKETS_CSV_FILE_PATH = "./src/test/resources/Day16 Data_02 IPL2019FactsheetMostWkts.csv";
     IPLAnalyser iplMostRuns;
-    IPLAnalyser oplMostWickets;
+    IPLAnalyser iplMostWickets;
     @Before
     public void setUp()
     {
         iplMostRuns = new IPLAnalyser(IPLAnalyser.Player.BATSMAN);
-        oplMostWickets = new IPLAnalyser(IPLAnalyser.Player.BOWLER);
+        iplMostWickets = new IPLAnalyser(IPLAnalyser.Player.BOWLER);
         ExpectedException exceptionRule = ExpectedException.none();
         exceptionRule.expect(IPLAnalyserException.class);
     }
@@ -56,6 +56,19 @@ public class IPLAnalyserTest
         try
         {
             iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+        } catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLMostWicketsCSVFile_ShouldReturnCorrectRecords()
+    {
+        try
+        {
+            int iplRecords = iplMostWickets.loadIPLData(IPLAnalyser.Player.BOWLER, ',', IPL_WICKETS_CSV_FILE_PATH);
+            Assert.assertEquals(100, iplRecords);
         } catch (IPLAnalyserException e)
         {
             e.printStackTrace();
