@@ -22,16 +22,17 @@ public class IPLMostRunsCSV
     @CsvBindByName(column = "Runs", required = true)
     public int runs;
 
-    @Override
-    public String toString()
+    public IPLMostRunsCSV()
     {
-        return "IPLMostRunsCSV{" +
-                "player='" + player + '\'' +
-                ", averages=" + averages +
-                ", strikeRates=" + strikeRates +
-                ", fours=" + fours +
-                ", sixes=" + sixes +
-                ", runs=" + runs +
-                '}';
+    }
+
+    public IPLMostRunsCSV(String player, double averages, double strikeRates, int fours, int sixes, int runs)
+    {
+        this.player = player;
+        this.averages = averages;
+        this.strikeRates = strikeRates;
+        this.fours = fours;
+        this.sixes = sixes;
+        this.runs = runs;
     }
 }
