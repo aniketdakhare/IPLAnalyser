@@ -92,6 +92,24 @@ public class IPLAnalyserTest
         }
     }
 
+    //UC2
+    @Test
+    public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_WithTopStrikeRate()
+    {
+        try
+        {
+            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedDataAsPerStrikeRate();
+            IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
+            Assert.assertEquals("Ishant Sharma", iplCSV[0].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //UC3
     @Test
     public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_WithMaximumFoursAndSixes()
     {
