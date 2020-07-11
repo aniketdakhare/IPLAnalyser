@@ -49,4 +49,16 @@ public class IPLAnalyser
         String sortedIPLData = new Gson().toJson(iplList);
         return sortedIPLData;
     }
+
+    public String getSortedDataForMaximumFoursAndSixes()
+    {
+        ArrayList iplList = iplMap.values().stream()
+                .sorted(Comparator.comparingInt(iplData -> ((iplData.sixes * 6) + (iplData.fours * 4))))
+                .map(censusDAO -> censusDAO.getIPLDTO(player))
+                .collect(toCollection(ArrayList::new));
+        String sortedIPLData = new Gson().toJson(iplList);
+        return sortedIPLData;
+    }
+
+
 }
