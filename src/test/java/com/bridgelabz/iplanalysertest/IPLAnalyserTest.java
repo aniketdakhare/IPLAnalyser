@@ -91,4 +91,21 @@ public class IPLAnalyserTest
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_WithMaximumFoursAndSixes()
+    {
+        try
+        {
+            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedDataForMaximumFoursAndSixes();
+            IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
+            Assert.assertEquals("Andre Russell", iplCSV[iplCSV.length - 1].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
