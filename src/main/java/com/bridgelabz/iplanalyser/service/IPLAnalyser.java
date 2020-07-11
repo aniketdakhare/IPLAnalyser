@@ -50,6 +50,16 @@ public class IPLAnalyser
         return sortedIPLData;
     }
 
+    public String getSortedDataAsPerStrikeRate()
+    {
+        ArrayList iplList = iplMap.values().stream()
+                .sorted((iplData1, iplData2) -> (int) (iplData2.strikeRates - iplData1.strikeRates))
+                .map(censusDAO -> censusDAO.getIPLDTO(player))
+                .collect(toCollection(ArrayList::new));
+        String sortedIPLData = new Gson().toJson(iplList);
+        return sortedIPLData;
+    }
+
     public String getSortedDataForMaximumFoursAndSixes()
     {
         ArrayList iplList = iplMap.values().stream()
@@ -59,6 +69,4 @@ public class IPLAnalyser
         String sortedIPLData = new Gson().toJson(iplList);
         return sortedIPLData;
     }
-
-
 }
