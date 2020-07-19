@@ -189,7 +189,7 @@ public class IPLAnalyserTest
             iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
             String checkPlayer = iplMostWickets.getSortedData(SortType.BOWLING_AVERAGE);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
-            Assert.assertEquals("Alzarri Joseph", iplCSV[0].player);
+            Assert.assertEquals("Anukul Roy", iplCSV[iplCSV.length - 1].player);
         }
         catch (IPLAnalyserException e)
         {
@@ -206,7 +206,7 @@ public class IPLAnalyserTest
             iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
             String checkPlayer = iplMostWickets.getSortedData(SortType.BOWLING_STRIKE_RATE);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
-            Assert.assertEquals("Shivam Dube", iplCSV[iplCSV.length - 1].player);
+            Assert.assertEquals("Alzarri Joseph", iplCSV[iplCSV.length - 1].player);
         }
         catch (IPLAnalyserException e)
         {
@@ -224,6 +224,23 @@ public class IPLAnalyserTest
             String checkPlayer = iplMostWickets.getSortedData(SortType.ECONOMY_RATE);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
             Assert.assertEquals("Shivam Dube", iplCSV[iplCSV.length - 1].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //UC10
+    @Test
+    public void givenIPLMostWicketsCSVFile_ShouldReturnPlayer_WithBestStrikeRateWith5WicketsAnd4Wickets()
+    {
+        try
+        {
+            iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
+            String checkPlayer = iplMostWickets.getSortedData(SortType.STRIKE_RATE_WITH_FOUR_AND_FIVE_WICKETS);
+            IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
+            Assert.assertEquals("Alzarri Joseph", iplCSV[0].player);
         }
         catch (IPLAnalyserException e)
         {
