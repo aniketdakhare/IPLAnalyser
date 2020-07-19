@@ -85,7 +85,7 @@ public class IPLAnalyserTest
         try
         {
             iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
-            String checkPlayer = iplMostRuns.getSortedData(SortType.AVERAGE);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.BATTING_AVERAGE);
             IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
             Assert.assertEquals("MS Dhoni", iplCSV[0].player);
         }
@@ -102,7 +102,7 @@ public class IPLAnalyserTest
         try
         {
             iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
-            String checkPlayer = iplMostRuns.getSortedData(SortType.STRIKE_RATE);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.BATTING_STRIKE_RATE);
             IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
             Assert.assertEquals("Ishant Sharma", iplCSV[0].player);
         }
@@ -187,9 +187,9 @@ public class IPLAnalyserTest
         try
         {
             iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
-            String checkPlayer = iplMostWickets.getSortedData(SortType.AVERAGE);
+            String checkPlayer = iplMostWickets.getSortedData(SortType.BOWLING_AVERAGE);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
-            Assert.assertEquals("Krishnappa Gowtham", iplCSV[0].player);
+            Assert.assertEquals("Alzarri Joseph", iplCSV[0].player);
         }
         catch (IPLAnalyserException e)
         {
@@ -204,9 +204,26 @@ public class IPLAnalyserTest
         try
         {
             iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
-            String checkPlayer = iplMostWickets.getSortedData(SortType.STRIKE_RATE);
+            String checkPlayer = iplMostWickets.getSortedData(SortType.BOWLING_STRIKE_RATE);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
-            Assert.assertEquals("Krishnappa Gowtham", iplCSV[0].player);
+            Assert.assertEquals("Shivam Dube", iplCSV[iplCSV.length - 1].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //UC9
+    @Test
+    public void givenIPLMostWicketsCSVFile_ShouldReturnPlayer_WithBestEconomyRate()
+    {
+        try
+        {
+            iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
+            String checkPlayer = iplMostWickets.getSortedData(SortType.ECONOMY_RATE);
+            IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
+            Assert.assertEquals("Shivam Dube", iplCSV[iplCSV.length - 1].player);
         }
         catch (IPLAnalyserException e)
         {
