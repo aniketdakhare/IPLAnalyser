@@ -16,10 +16,12 @@ public enum SortType
     BOWLING_AVERAGE(Comparator.comparing(ipl -> {if (ipl.averages != 0) return ipl.averages; return 100.0; })),
     BOWLING_STRIKE_RATE(Comparator.comparing(ipl -> {if (ipl.strikeRates != 0) return ipl.strikeRates; return 100.0; })),
     ECONOMY_RATE(Comparator.comparing(ipl -> ipl.economyRates)),
+    WICKETS(Comparator.comparing(ipl -> ipl.wickets)),
     STRIKE_RATE_WITH_FOUR_AND_FIVE_WICKETS(BOWLING_STRIKE_RATE.comparator.reversed()
             .thenComparing(ipl -> ipl.fourWickets + ipl.fiveWickets)),
     BOWLING_AVERAGE_WITH_STRIKE_RATE(BOWLING_AVERAGE.comparator.reversed()
-            .thenComparing(BOWLING_STRIKE_RATE.comparator.reversed()));
+            .thenComparing(BOWLING_STRIKE_RATE.comparator.reversed())),
+    WICKETS_WITH_BOWLING_AVERAGE(WICKETS.comparator.thenComparing(BOWLING_AVERAGE.comparator));
 
     public Comparator<IPLAnalyserDAO> comparator;
 
