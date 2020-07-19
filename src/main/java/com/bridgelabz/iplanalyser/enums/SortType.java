@@ -12,7 +12,8 @@ public enum SortType
     RUNS(Comparator.comparing(ipl -> ipl.runs)),
     STRIKE_RATE_WITH_SIX_AND_FOUR(FOURS_AND_SIXES.comparator.thenComparing(BATTING_STRIKE_RATE.comparator)),
     BATTING_AVERAGE_WITH_STRIKE_RATE(BATTING_AVERAGE.comparator.thenComparing(BATTING_STRIKE_RATE.comparator)),
-    RUNS_WITH_BATTING_AVERAGE(RUNS.comparator.thenComparing(BATTING_STRIKE_RATE.comparator));
+    RUNS_WITH_BATTING_AVERAGE(RUNS.comparator.thenComparing(BATTING_STRIKE_RATE.comparator)),
+    BOWLING_AVERAGE(Comparator.comparing(ipl -> ipl.averages));
 
     public Comparator<IPLAnalyserDAO> comparator;
 
