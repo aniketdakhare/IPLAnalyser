@@ -71,7 +71,7 @@ public class IPLAnalyserTest
         try
         {
             int iplRecords = iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
-            Assert.assertEquals(100, iplRecords);
+            Assert.assertEquals(99, iplRecords);
         } catch (IPLAnalyserException e)
         {
             e.printStackTrace();
@@ -241,6 +241,23 @@ public class IPLAnalyserTest
             String checkPlayer = iplMostWickets.getSortedData(SortType.STRIKE_RATE_WITH_FOUR_AND_FIVE_WICKETS);
             IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
             Assert.assertEquals("Alzarri Joseph", iplCSV[0].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //UC11
+    @Test
+    public void givenIPLMostWicketsCSVFile_ShouldReturnPlayer_WithGreatBowlingAverageWithBestStrikeRate()
+    {
+        try
+        {
+            iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
+            String checkPlayer = iplMostWickets.getSortedData(SortType.BOWLING_AVERAGE_WITH_STRIKE_RATE);
+            IPLMostWicketsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostWicketsCSV[].class);
+            Assert.assertEquals("Anukul Roy", iplCSV[0].player);
         }
         catch (IPLAnalyserException e)
         {
