@@ -1,5 +1,7 @@
 package com.bridgelabz.iplanalysertest;
 
+import com.bridgelabz.iplanalyser.enums.ScoreType;
+import com.bridgelabz.iplanalyser.enums.SortType;
 import com.bridgelabz.iplanalyser.exception.IPLAnalyserException;
 import com.bridgelabz.iplanalyser.model.IPLMostRunsCSV;
 import com.bridgelabz.iplanalyser.service.IPLAnalyser;
@@ -19,8 +21,8 @@ public class IPLAnalyserTest
     @Before
     public void setUp()
     {
-        iplMostRuns = new IPLAnalyser(IPLAnalyser.Player.BATSMAN);
-        iplMostWickets = new IPLAnalyser(IPLAnalyser.Player.BOWLER);
+        iplMostRuns = new IPLAnalyser(ScoreType.MOST_RUNS);
+        iplMostWickets = new IPLAnalyser(ScoreType.MOST_WICKETS);
         ExpectedException exceptionRule = ExpectedException.none();
         exceptionRule.expect(IPLAnalyserException.class);
     }
@@ -30,7 +32,7 @@ public class IPLAnalyserTest
     {
         try
         {
-            int iplRecords = iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+            int iplRecords = iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
             Assert.assertEquals(100, iplRecords);
         } catch (IPLAnalyserException e)
         {
@@ -43,7 +45,7 @@ public class IPLAnalyserTest
     {
         try
         {
-            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_WRONG_FILE_PATH );
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_WRONG_FILE_PATH );
         } catch (IPLAnalyserException e)
         {
             e.printStackTrace();
@@ -55,7 +57,7 @@ public class IPLAnalyserTest
     {
         try
         {
-            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
         } catch (IPLAnalyserException e)
         {
             e.printStackTrace();
@@ -67,7 +69,7 @@ public class IPLAnalyserTest
     {
         try
         {
-            int iplRecords = iplMostWickets.loadIPLData(IPLAnalyser.Player.BOWLER, ',', IPL_WICKETS_CSV_FILE_PATH);
+            int iplRecords = iplMostWickets.loadIPLData(ScoreType.MOST_WICKETS, ',', IPL_WICKETS_CSV_FILE_PATH);
             Assert.assertEquals(100, iplRecords);
         } catch (IPLAnalyserException e)
         {
@@ -81,8 +83,8 @@ public class IPLAnalyserTest
     {
         try
         {
-            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
-            String checkPlayer = iplMostRuns.getSortedDataAsPerBattingAverage();
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.BATTING_AVERAGE);
             IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
             Assert.assertEquals("MS Dhoni", iplCSV[0].player);
         }
@@ -98,8 +100,8 @@ public class IPLAnalyserTest
     {
         try
         {
-            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
-            String checkPlayer = iplMostRuns.getSortedDataAsPerStrikeRate();
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.BATTING_STRIKE_RATE);
             IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
             Assert.assertEquals("Ishant Sharma", iplCSV[0].player);
         }
@@ -115,15 +117,14 @@ public class IPLAnalyserTest
     {
         try
         {
-            iplMostRuns.loadIPLData(IPLAnalyser.Player.BATSMAN, ',', IPL_RUN_CSV_FILE_PATH);
-            String checkPlayer = iplMostRuns.getSortedDataForMaximumFoursAndSixes();
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.FOURS_AND_SIXES);
             IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
-            Assert.assertEquals("Andre Russell", iplCSV[iplCSV.length - 1].player);
+            Assert.assertEquals("Andre Russell", iplCSV[0].player);
         }
         catch (IPLAnalyserException e)
         {
             e.printStackTrace();
         }
     }
-
 }

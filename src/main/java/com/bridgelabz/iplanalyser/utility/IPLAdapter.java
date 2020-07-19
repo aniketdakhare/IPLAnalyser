@@ -17,11 +17,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public abstract class IPLAdapter
+public class IPLAdapter
 {
-    public abstract Map<String, IPLAnalyserDAO> loadIPLData(char separator, String... csvFilePath)
-            throws IPLAnalyserException;
-
     /**
      * METHOD TO LOAD IPL 2019 DATA
      * Note:- Pass argument as '0' for OpenCSV and '1' for CommonCSV in createCSVBuilder method
@@ -31,26 +28,26 @@ public abstract class IPLAdapter
      * @return map of loaded data
      * @throws IPLAnalyserException while handling the occurred exception
      */
-    public <E> Map<String, IPLAnalyserDAO> loadIPLData(char separator, Class<E> iplCSVClass, String... csvFilePath)
+    public <E> Map<String, IPLAnalyserDAO> loadIPLData(char separator, Class<E> iplCSVClass, String csvFilePath)
             throws IPLAnalyserException
     {
         Map<String, IPLAnalyserDAO> iplMap = new HashMap<>();
-        try( Reader reader = Files.newBufferedReader(Paths.get(csvFilePath[0])))
+        try( Reader reader = Files.newBufferedReader(Paths.get(csvFilePath)))
         {
-            Iterator<E> censusIterator = CSVBuilderFactory.createCSVBuilder(0)
+            Iterator<E> iplIterator = CSVBuilderFactory.createCSVBuilder(0)
                     .getCSVFileIterator(reader, iplCSVClass, separator);
-            Iterable<E> csvIterable = () -> censusIterator;
+            Iterable<E> csvIterable = () -> iplIterator;
             switch (iplCSVClass.getSimpleName())
             {
                 case "IPLMostRunsCSV":
                     StreamSupport.stream(csvIterable.spliterator(), false)
                             .map(IPLMostRunsCSV.class::cast)
-                            .forEach(csvState -> iplMap.put(csvState.player, new IPLAnalyserDAO(csvState)));
+                            .forEach(iplData -> iplMap.put(iplData.player, new IPLAnalyserDAO(iplData)));
                     break;
                 case "IPLMostWicketsCSV":
                     StreamSupport.stream(csvIterable.spliterator(), false)
                             .map(IPLMostWicketsCSV.class::cast)
-                            .forEach(csvState -> iplMap.put(csvState.player, new IPLAnalyserDAO(csvState)));
+                            .forEach(iplData -> iplMap.put(iplData.player, new IPLAnalyserDAO(iplData)));
                     break;
             }
             return iplMap;

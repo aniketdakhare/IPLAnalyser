@@ -22,9 +22,7 @@ public class IPLMostRunsCSV
     @CsvBindByName(column = "Runs", required = true)
     public int runs;
 
-    public IPLMostRunsCSV()
-    {
-    }
+    public IPLMostRunsCSV() { }
 
     public IPLMostRunsCSV(String player, double averages, double strikeRates, int fours, int sixes, int runs)
     {

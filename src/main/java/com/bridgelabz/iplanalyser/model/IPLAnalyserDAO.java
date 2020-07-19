@@ -1,6 +1,6 @@
 package com.bridgelabz.iplanalyser.model;
 
-import com.bridgelabz.iplanalyser.service.IPLAnalyser;
+import com.bridgelabz.iplanalyser.enums.ScoreType;
 
 public class IPLAnalyserDAO
 {
@@ -36,9 +36,9 @@ public class IPLAnalyserDAO
         wickets=iplMostWicketsCSV.wickets;
     }
 
-    public Object getIPLDTO(IPLAnalyser.Player player)
+    public Object getIPLDTO(ScoreType scoreType)
     {
-        if (player.equals(IPLAnalyser.Player.BATSMAN))
+        if (scoreType.equals(ScoreType.MOST_RUNS))
             return new IPLMostRunsCSV(this.player, averages, strikeRates, fours, sixes, runs);
         return new IPLMostWicketsCSV(this.player, averages, strikeRates, fourWickets, fiveWickets, economyRates, wickets);
     }

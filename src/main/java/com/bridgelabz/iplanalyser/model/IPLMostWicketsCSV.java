@@ -25,9 +25,7 @@ public class IPLMostWicketsCSV
     @CsvBindByName(column = "Wkts", required = true)
     public int wickets;
 
-    public IPLMostWicketsCSV()
-    {
-    }
+    public IPLMostWicketsCSV() { }
 
     public IPLMostWicketsCSV(String player, double averages, double strikeRates, int fourWickets, int fiveWickets,
                              double economyRates, int wickets)

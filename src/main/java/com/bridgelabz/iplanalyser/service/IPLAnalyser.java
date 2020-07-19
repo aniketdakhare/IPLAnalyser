@@ -1,70 +1,50 @@
 package com.bridgelabz.iplanalyser.service;
 
+import com.bridgelabz.iplanalyser.enums.ScoreType;
+import com.bridgelabz.iplanalyser.enums.SortType;
 import com.bridgelabz.iplanalyser.exception.IPLAnalyserException;
 import com.bridgelabz.iplanalyser.model.IPLAnalyserDAO;
 import com.bridgelabz.iplanalyser.utility.IPLAdapterFactory;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toCollection;
 
 public class IPLAnalyser
 {
-    public enum Player
-    {
-        BATSMAN,BOWLER
-    }
-
-    private Player player;
+    private final ScoreType scoreType;
     Map<String, IPLAnalyserDAO> iplMap;
 
-    public IPLAnalyser(Player player)
+    public IPLAnalyser(ScoreType scoreType)
     {
-        this.player = player;
+        this.scoreType = scoreType;
     }
 
     /**
-     * METHOD TO LOAD CENSUS DATA
+     * METHOD TO LOAD IPL 2019 DATA
      * @param csvFilePath provides the path of file
      * @param separator provides the separator for records in csv file
      * @throws IPLAnalyserException while handling the occurred exception
      */
-    public int loadIPLData(Player player, char separator, String... csvFilePath)
+    public int loadIPLData(ScoreType scoreType, char separator, String csvFilePath)
             throws IPLAnalyserException
     {
-        iplMap = IPLAdapterFactory.getIPLDataObject(player, separator, csvFilePath);
+        iplMap = IPLAdapterFactory.getIPLDataObject(scoreType, separator, csvFilePath);
         return iplMap.size();
     }
 
-    public String getSortedDataAsPerBattingAverage()
-    {
-        Comparator<IPLAnalyserDAO> daoComparator = Comparator.comparing(ipl -> ipl.averages );
-        ArrayList iplList = iplMap.values().stream()
-                .sorted(daoComparator.reversed())
-                .map(censusDAO -> censusDAO.getIPLDTO(player))
-                .collect(toCollection(ArrayList::new));
-        String sortedIPLData = new Gson().toJson(iplList);
-        return sortedIPLData;
-    }
-
-    public String getSortedDataAsPerStrikeRate()
+    /**
+     * METHOD TO SORT IPL 2019 DATA
+     * @param sortType provides the type to sort the data
+     * @return sorted data in json format
+     */
+    public String getSortedData(SortType sortType)
     {
         ArrayList iplList = iplMap.values().stream()
-                .sorted((iplData1, iplData2) -> (int) (iplData2.strikeRates - iplData1.strikeRates))
-                .map(censusDAO -> censusDAO.getIPLDTO(player))
-                .collect(toCollection(ArrayList::new));
-        String sortedIPLData = new Gson().toJson(iplList);
-        return sortedIPLData;
-    }
-
-    public String getSortedDataForMaximumFoursAndSixes()
-    {
-        ArrayList iplList = iplMap.values().stream()
-                .sorted(Comparator.comparingInt(iplData -> ((iplData.sixes * 6) + (iplData.fours * 4))))
-                .map(censusDAO -> censusDAO.getIPLDTO(player))
+                .sorted(sortType.comparator.reversed())
+                .map(censusDAO -> censusDAO.getIPLDTO(scoreType))
                 .collect(toCollection(ArrayList::new));
         String sortedIPLData = new Gson().toJson(iplList);
         return sortedIPLData;
