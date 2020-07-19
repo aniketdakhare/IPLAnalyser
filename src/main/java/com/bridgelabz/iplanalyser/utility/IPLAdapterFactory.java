@@ -17,6 +17,6 @@ public class IPLAdapterFactory
     public static Map<String, IPLAnalyserDAO> getIPLDataObject(ScoreType scoreType, char separator,
                                                                String csvFilePath) throws IPLAnalyserException
     {
-        return new IPLAdapter().loadIPLData(separator, scoreType.classTpe, csvFilePath);
+        return new IPLAdapter().loadIPLData(separator, scoreType.classType, csvFilePath);
     }
 }

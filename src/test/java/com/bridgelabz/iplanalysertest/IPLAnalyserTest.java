@@ -127,4 +127,21 @@ public class IPLAnalyserTest
             e.printStackTrace();
         }
     }
+
+    //UC4
+    @Test
+    public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_HavingBestStrikeRateWithFoursAndSixes()
+    {
+        try
+        {
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.STRIKE_RATE_WITH_SIX_AND_FOUR);
+            IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
+            Assert.assertEquals("Andre Russell", iplCSV[0].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

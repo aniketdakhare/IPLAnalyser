@@ -7,10 +7,10 @@ public enum ScoreType
 {
     MOST_RUNS(IPLMostRunsCSV.class), MOST_WICKETS(IPLMostWicketsCSV.class);
 
-    public Class classTpe;
+    public Class classType;
 
     ScoreType(Class classTpe)
     {
-        this.classTpe = classTpe;
+        this.classType = classTpe;
     }
 }
