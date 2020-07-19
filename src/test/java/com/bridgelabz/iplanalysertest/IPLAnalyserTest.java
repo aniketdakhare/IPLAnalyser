@@ -144,4 +144,21 @@ public class IPLAnalyserTest
             e.printStackTrace();
         }
     }
+
+    //UC5
+    @Test
+    public void givenIPLMostRunsCSVFile_ShouldReturnPlayer_HavingGreatAverageWithBestStrikeRate()
+    {
+        try
+        {
+            iplMostRuns.loadIPLData(ScoreType.MOST_RUNS, ',', IPL_RUN_CSV_FILE_PATH);
+            String checkPlayer = iplMostRuns.getSortedData(SortType.BATTING_AVERAGE_WITH_STRIKE_RATE);
+            IPLMostRunsCSV[] iplCSV = new Gson().fromJson(checkPlayer, IPLMostRunsCSV[].class);
+            Assert.assertEquals("MS Dhoni", iplCSV[0].player);
+        }
+        catch (IPLAnalyserException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
